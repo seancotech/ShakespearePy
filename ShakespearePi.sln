@@ -1,9 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ShakespearePi", "ShakespearePi\ShakespearePi.pyproj", "{17C24F74-04B8-4525-B2EA-12F77D43693E}"
+# Visual Studio 2012
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ShakespearePi", "ShakespearePi.pyproj", "{4BC5D1B3-CE70-47D5-AAC9-EDFD84515EBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,8 +9,8 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{17C24F74-04B8-4525-B2EA-12F77D43693E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17C24F74-04B8-4525-B2EA-12F77D43693E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BC5D1B3-CE70-47D5-AAC9-EDFD84515EBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BC5D1B3-CE70-47D5-AAC9-EDFD84515EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

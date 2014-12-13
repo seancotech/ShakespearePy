@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>17c24f74-04b8-4525-b2ea-12f77d43693e</ProjectGuid>
+    <ProjectGuid>4bc5d1b3-ce70-47d5-aac9-edfd84515ebc</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>ShakespearePi.py</StartupFile>
     <SearchPath>
