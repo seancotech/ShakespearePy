@@ -1,3 +1,5 @@
+from random import choice
+
 quotes = ["To be, or not to be", 
 "My kingdom for a horse", 
 "Get thee to a nunnery", 
@@ -539,3 +541,6 @@ quotes = ["To be, or not to be",
 "Vaulting ambition", 
 "Swift as a shadow", 
 "To be, or not to be"]
+
+def getRandomQuote():
+       return choice(quotes)
