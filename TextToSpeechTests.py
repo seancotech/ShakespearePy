@@ -1,17 +1,15 @@
 import pyttsx
 import random
+from Quotes import getRandomQuote
 
-phrases = ["To be or not to be", 
-    "Hello, world", 
-    "My kingdom for a horse"]
-
+numQuotes = 20
 speechEngine = pyttsx.init()
 speechEngine.setProperty("rate", 100)
 voices = speechEngine.getProperty("voices")
-for phrase in phrases:
+for count in range(0, numQuotes):
     # Pick a random voice from those available
     speechEngine.setProperty("voice", random.choice(voices))
-    speechEngine.say(phrase)
+    speechEngine.say(getRandomQuote())
 
 # Speak!
 speechEngine.runAndWait()
