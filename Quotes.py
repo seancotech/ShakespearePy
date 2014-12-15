@@ -544,4 +544,4 @@ quotes = ["To be, or not to be",
 
 def getRandomQuote():
     """Returns a random quote from the quote list."""
-       return choice(quotes)
+    return choice(quotes)
