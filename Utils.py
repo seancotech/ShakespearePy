@@ -1,4 +1,3 @@
-from ShakespeareSpeech import ShakespeareSpeech
 from threading import Thread
 from xml.dom import minidom
 from xml.etree import cElementTree
@@ -12,3 +11,4 @@ def loadFile(filename):
     file.close()
 
     return output
+
