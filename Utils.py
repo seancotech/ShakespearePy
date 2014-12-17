@@ -1,3 +1,4 @@
+from ShakespeareSpeech import ShakespeareSpeech
 from threading import Thread
 from xml.dom import minidom
 from xml.etree import cElementTree
@@ -14,6 +15,32 @@ def readXMLAsync(filepath):
 
     # Done!
     return asyncResult.get()
+
+def processXMLToSpeechList(root):
+    """Processes a cElementTree object and returns a list of ShakespeareSpeech objects."""
+    output = []
+    # Given that the structure will be...
+    # <PLAY>PLAY_NAME
+    # <ACT>
+    # <SCENE>
+    # <SPEECH>
+    # <SPEAKER>SPEAKER_NAME</SPEAKER>
+    # SPEECH_BODY</SPEECH>
+
+    # So, let's do a pre-order traversal over the XML parse tree to populate the list
+    for play in root:
+        currentPlay = play.text
+        currentAct = 0
+        for act in play:
+            currentAct += 1
+            currentScene = 0
+            for scene in act:
+                currentScene += 1
+                for speech in scene:
+                    speakers = speech[0].text
+                    speechText = speech[1].text
+                    output.append(ShakespeareSpeech(currentPlay, currentAct, currentScene, speakers, speechText))
+    return output
 
 def readXMLFromFile(filepath, resultQueue):
     inputString = ""

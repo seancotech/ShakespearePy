@@ -28,6 +28,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ShakespearePi.py" />
+    <Compile Include="ShakespeareSpeech.py" />
     <Compile Include="TextToSpeechTests.py" />
     <Compile Include="Utils.py">
       <SubType>Code</SubType>
