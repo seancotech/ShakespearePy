@@ -21,9 +21,12 @@ class Newspeech(object):
 
         # Find last index of open and close tags
         lastOpenTagIndex = splitBody.rfind(tag)
-        lastCloseTagindex = splitBody.rfind(tag.replace("<", "</", 1))
+        # Start searching from after the ">" symbol of the tag
+        startIndex = lastOpenTagIndex + len(tag)
+        # Find the next tag, whatever it is - close tags can be AFTER the splitBody cutoff!
+        nextOpenTagIndex = startIndex + (splitBody[startIndex:].index("<"))
 
         # Return contents
-        return splitBody[(lastOpenTagIndex + len(tag)):lastCloseTagindex]
+        return splitBody[startIndex:nextOpenTagIndex]
 
 
