@@ -6,12 +6,14 @@ from sys import argv
 from Newspeech import *
 from Quotes import *
 from Utils import *
+from TTSpeaker import *
 
 # Filepaths
 NEW_SPEECH = path.join(getcwd(), "Assets", "newspeech.xml")
 
 def main():
     quote = ""
+    speak = TTSpeaker()
 
     # 1. Load XML into object from file
     print("Reading file...")
@@ -36,6 +38,9 @@ def main():
     print "" # Blank line
     # Search for and display quote
     prettyPrintQuote(newspeech.getSpeech(quote))
+
+    # Read it! (TTS)
+    speak.readString(newspeech.getSpeech(quote).getSpeech())
 
 def prettyPrintQuote(quoteObject):
     """Pretty-prints a provided ShakespeareQuote object."""

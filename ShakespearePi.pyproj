@@ -35,6 +35,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TextToSpeechTests.py" />
+    <Compile Include="TTSpeaker.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Utils.py">
       <SubType>Code</SubType>
     </Compile>
