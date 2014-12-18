@@ -21,14 +21,17 @@ class Newspeech(object):
         index = -1
 
         try:
-            index = self.body.index(searchString)
+            index = self.getIndexIgnoreCase(searchString)
         except ValueError:
             # The string wasn't found in any play!
             return False
 
-        play = backtrack(index, PLAY_TAG)
-        speaker = backtrack(index, SPEAKER_TAG)
+        play = self.backtrack(index, PLAY_TAG)
+        speaker = self.backtrack(index, SPEAKER_TAG)
+        speech = self.backtrackGetSpeech(index)
 
+        # Return the speech and metadata in a new ShakespeareSpeech object for simplicity
+        return ShakespeareSpeech(play, speaker, speech)
 
     def backtrack(self, index, tag):
         """Backtracks from the provided index until the given tag is encountered.
@@ -50,17 +53,22 @@ class Newspeech(object):
     def backtrackGetSpeech(self, index):
         """Backtracks from the provided speech index and returns the full speech."""
 
-        startSpeechIndex = getPreviousIndex(self.body, CLOSE_TAG, index) + 1
-        endSpeechIndex = getNextIndex(self.body, OPEN_TAG, index)
+        startSpeechIndex = self.getPreviousIndex(self.body, CLOSE_TAG, index) + 1
+        endSpeechIndex = self.getNextIndex(self.body, OPEN_TAG, index)
 
         return self.body[startSpeechIndex:endSpeechIndex]
 
-    def getPreviousIndex(haystack, needle, index):
+    def getPreviousIndex(self, haystack, needle, index):
         """Returns the previous index of a substring ending at the current index in haystack."""
 
         return haystack.rfind(needle, 0, index)
         
-    def getNextIndex(haystack, needle, index):
+    def getNextIndex(self, haystack, needle, index):
         """Returns the next index of a substring starting from the current index in haystack."""
 
         return haystack.find(needle, index + 1)
+
+    def getIndexIgnoreCase(self, needle):
+        """Expensive search to find the index of the needle in the body, ignoring case."""
+        
+        return self.body.lower().index(needle.lower())
