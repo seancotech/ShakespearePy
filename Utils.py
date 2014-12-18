@@ -11,4 +11,3 @@ def loadFile(filename):
     file.close()
 
     return output
-

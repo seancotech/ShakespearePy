@@ -24,10 +24,16 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Newspeech.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Quotes.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ShakespearePi.py" />
+    <Compile Include="ShakespeareSpeech.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TextToSpeechTests.py" />
     <Compile Include="Utils.py">
       <SubType>Code</SubType>
