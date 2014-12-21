@@ -33,7 +33,7 @@ def main():
         for word in argv:
             if argv.index(word) != 0:
                 quote += word + " "
-
+    quote = quote[0:len(quote) - 2] # Trim last space
     print("Search string: " + quote)
     print "" # Blank line
     # Search for and display quote
