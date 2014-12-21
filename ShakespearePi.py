@@ -27,7 +27,7 @@ def main():
     print("Done reading!")
     print "" # Blank line
 
-    if (len(argv) < 2 or len(argv) is 2 and (argv[1] is SPEAK_LONG_SWITCH or argv[1] is SPEAK_SHORT_SWITCH)):
+    if (len(argv) is 1 or (len(argv) is 2 and (argv[1] is SPEAK_LONG_SWITCH or argv[1] is SPEAK_SHORT_SWITCH))):
         # No arguments given, so pick a random quote and search for it
         print("Run with no arguments given! Picking a random quote...")
         quote = getRandomQuote()
@@ -40,8 +40,10 @@ def main():
                 if word is SPEAK_LONG_SWITCH or word is SPEAK_SHORT_SWITCH:
                     # We should read the quote!
                     readQuote = True
-                else:
+                elif argv.index(word) < (len(argv) - 1):
                     quote += word + " "
+                else:
+                    quote += word
 
     quote = quote[0:len(quote) - 2] # Trim last space
     print("Search string: " + quote)
