@@ -27,7 +27,7 @@ def main():
     print("Done reading!")
     print "" # Blank line
 
-    if (len(argv) < 2 or len(argv) is 3 and (argv[1] is SPEAK_LONG_SWITCH or argv[1] is SPEAK_SHORT_SWITCH)):
+    if (len(argv) < 2 or len(argv) is 2 and (argv[1] is SPEAK_LONG_SWITCH or argv[1] is SPEAK_SHORT_SWITCH)):
         # No arguments given, so pick a random quote and search for it
         print("Run with no arguments given! Picking a random quote...")
         quote = getRandomQuote()
