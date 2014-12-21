@@ -33,9 +33,10 @@ def main():
 
     if SPEAK_LONG_SWITCH in argv or SPEAK_SHORT_SWITCH in argv:
         readQuote = True
-        argv.remove(SPEAK_LONG_SWITCH)
-        argv.remove(SPEAK_SHORT_SWITCH)
+        if SPEAK_LONG_SWITCH in argv: argv.remove(SPEAK_LONG_SWITCH)
+        if SPEAK_LONG_SWITCH in argv: argv.remove(SPEAK_SHORT_SWITCH)
 
+    # Now, only thing left should be the quote
     if len(argv) >= 1:
         quote = ' '.join(argv)
     else:
