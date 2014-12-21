@@ -29,7 +29,7 @@ def main():
 
     # Assumed everything after the script call is part of the quote
     # Search for the quote provided
-    argv.remove(argv[1])
+    argv.remove(argv[0])
 
     if SPEAK_LONG_SWITCH in argv or SPEAK_SHORT_SWITCH in argv:
         readQuote = True
