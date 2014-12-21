@@ -11,7 +11,12 @@ from TTSpeaker import *
 # Filepaths
 NEW_SPEECH = path.join(getcwd(), "Assets", "newspeech.xml")
 
+# Command-line switches
+SPEAK_LONG_SWITCH = "--speak"
+SPEAK_SHORT_SWITCH = "-s"
+
 def main():
+    readQuote = False
     quote = ""
     speak = TTSpeaker()
 
@@ -22,7 +27,7 @@ def main():
     print("Done reading!")
     print "" # Blank line
 
-    if (len(argv) < 2):
+    if (len(argv) < 2 and (argv[1] is SPEAK_LONG_SWITCH or argv[1] is SPEAK_SHORT_SWITCH)):
         # No arguments given, so pick a random quote and search for it
         print("Run with no arguments given! Picking a random quote...")
         quote = getRandomQuote()
@@ -32,15 +37,21 @@ def main():
         # Search for the quote provided
         for word in argv:
             if argv.index(word) != 0:
-                quote += word + " "
+                if word is SPEAK_LONG_SWITCH or word is SPEAK_SHORT_SWITCH:
+                    # We should read the quote!
+                    readQuote = True
+                else:
+                    quote += word + " "
+
     quote = quote[0:len(quote) - 2] # Trim last space
     print("Search string: " + quote)
     print "" # Blank line
     # Search for and display quote
     prettyPrintQuote(newspeech.getSpeech(quote))
 
-    # Read it! (TTS)
-    speak.readString(newspeech.getSpeech(quote).getSpeech())
+    if readQuote:
+        # Read it! (TTS)
+        speak.readString(newspeech.getSpeech(quote).getSpeech())
 
 def prettyPrintQuote(quoteObject):
     """Pretty-prints a provided ShakespeareQuote object."""
