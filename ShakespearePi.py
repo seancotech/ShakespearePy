@@ -9,7 +9,8 @@ from Utils import *
 from TTSpeaker import *
 
 # Filepaths
-NEW_SPEECH = path.join(getcwd(), "Assets", "newspeech.xml")
+SCRIPT_DIR = path.dirname(path.realpath(__file__))
+NEW_SPEECH = path.join(SCRIPT_DIR, "Assets", "newspeech.xml")
 
 # Command-line switches
 SPEAK_LONG_SWITCH = "--speak"
