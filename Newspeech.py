@@ -23,9 +23,8 @@ class Newspeech(object):
         invalid = True
 
         while invalid:
-            try:
-                index = self.getNextIndexIgnoreCase(index, searchString)
-            except ValueError:
+            index = self.getNextIndexIgnoreCase(index, searchString)
+            if index is -1:
                 # The string wasn't found in any play!
                 return False
 
@@ -36,7 +35,7 @@ class Newspeech(object):
                 invalid = False
             except:
                 invalid = True
-            
+        
         # Return the speech and metadata in a new ShakespeareSpeech object for simplicity
         return ShakespeareSpeech(play, speaker, speech)
 
