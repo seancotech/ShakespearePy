@@ -15,18 +15,14 @@ NEW_SPEECH = path.join(SCRIPT_DIR, "Assets", "newspeech.xml")
 # Command-line switches
 SPEAK_LONG_SWITCH = "--speak"
 SPEAK_SHORT_SWITCH = "-s"
+QUIET_LONG_SWITCH = "--quiet"
+QUIET_SHORT_SWITCH = "-q"
 
 def main():
+    quiet = False
     readQuote = False
     quote = ""
     speak = TTSpeaker()
-
-    # 1. Load XML into object from file
-    print("Reading file...")
-    xml = loadFile(NEW_SPEECH)
-    newspeech = Newspeech(xml)
-    print("Done reading!")
-    print "" # Blank line
 
     # Assumed everything after the script call is part of the quote
     # Search for the quote provided
@@ -35,18 +31,31 @@ def main():
     if SPEAK_LONG_SWITCH in argv or SPEAK_SHORT_SWITCH in argv:
         readQuote = True
         if SPEAK_LONG_SWITCH in argv: argv.remove(SPEAK_LONG_SWITCH)
-        if SPEAK_LONG_SWITCH in argv: argv.remove(SPEAK_SHORT_SWITCH)
+        if SPEAK_SHORT_SWITCH in argv: argv.remove(SPEAK_SHORT_SWITCH)
+    
+    if QUIET_LONG_SWITCH in argv or QUIET_SHORT_SWITCH in argv:
+	quiet = True
+	if QUIET_LONG_SWITCH in argv: argv.remove(QUIET_LONG_SWITCH)
+	if QUIET_SHORT_SWITCH in argv: argv.remove(QUIET_SHORT_SWITCH)
+
+ 
+    # Load XML into object from file
+    if not quiet: print("Reading file...")
+    xml = loadFile(NEW_SPEECH)
+    newspeech = Newspeech(xml)
+    if not quiet: print("Done reading!")
+    if not quiet: print "" # Blank line   
 
     # Now, only thing left should be the quote
     if len(argv) >= 1:
         quote = ' '.join(argv)
     else:
         # No arguments given, so pick a random quote and search for it
-        print("Run with no arguments given! Picking a random quote...")
+        if not quiet: print("Run with no arguments given! Picking a random quote...")
         quote = getRandomQuote()
 
-    print("Search string: " + quote)
-    print "" # Blank line
+    if not quiet: print("Search string: " + quote)
+    if not quiet: print "" # Blank line
     # Search for and display quote
     prettyPrintQuote(newspeech.getSpeech(quote))
 
