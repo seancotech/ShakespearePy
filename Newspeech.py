@@ -13,23 +13,30 @@ class Newspeech(object):
 
     def __init__(self, body):
         self.body = body
+        self.searchBody = self.body.lower()
 
     def getSpeech(self, searchString):
         """Returns a ShakespeareSpeech object with the relevant speech 
         corresponding to the given search string."""
 
         index = -1
+        invalid = True
 
-        try:
-            index = self.getIndexIgnoreCase(searchString)
-        except ValueError:
-            # The string wasn't found in any play!
-            return False
+        while invalid:
+            try:
+                index = self.getNextIndexIgnoreCase(index, searchString)
+            except ValueError:
+                # The string wasn't found in any play!
+                return False
 
-        play = self.backtrack(index, PLAY_TAG)
-        speaker = self.backtrack(index, SPEAKER_TAG)
-        speech = self.backtrackGetSpeech(index)
-
+            play = self.backtrack(index, PLAY_TAG)
+            try:
+                speaker = self.backtrack(index, SPEAKER_TAG)
+                speech = self.backtrackGetSpeech(index)
+                invalid = False
+            except:
+                invalid = True
+            
         # Return the speech and metadata in a new ShakespeareSpeech object for simplicity
         return ShakespeareSpeech(play, speaker, speech)
 
@@ -69,6 +76,11 @@ class Newspeech(object):
         return haystack.find(needle, index + 1)
 
     def getIndexIgnoreCase(self, needle):
-        """Expensive search to find the index of the needle in the body, ignoring case."""
+        """Search to find the first index of the needle in the body, ignoring case."""
         
-        return self.body.lower().index(needle.lower())
+        return self.searchBody.index(needle.lower())
+
+    def getNextIndexIgnoreCase(self, index, needle):
+        """Search to find the next index of the needle in the body, ignoring case."""
+
+        return self.getNextIndex(self.searchBody, needle.lower(), index + 1)
