@@ -29,8 +29,8 @@ class Newspeech(object):
                 # The string wasn't found in any play!
                 return False
 
-            play = self.backtrack(index, PLAY_TAG)
             try:
+                play = self.backtrack(index, PLAY_TAG)
                 speaker = self.backtrack(index, SPEAKER_TAG)
                 speech = self.backtrackGetSpeech(index)
                 invalid = False
