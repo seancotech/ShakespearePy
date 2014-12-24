@@ -12,6 +12,9 @@ python ShakespearePi [-q|--quiet] [-s|--speak] [-n|--no-cache] [quote]
 ````
 
 `-q`, `--quiet`: Omit all output except the output speech data.
+
 `-s`, `--speak`: Speak output using the pyttsx library after lookup.
+
 `-n`, `--no-cache`: Don't cache to a file or look for one at all before lookup.
+
 `quote`: Input quote to look up. If none is provided, a quote will be chosen at random from `Quotes.py`.
