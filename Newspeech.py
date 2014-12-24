@@ -7,6 +7,7 @@ SPEAKER_TAG = "<SPEAKER>"
 SPEECH_TAG = "<SPEECH>"
 OPEN_TAG = "<"
 CLOSE_TAG = ">"
+PUNCTUATION = [",", "-", ".", "'", ";", '"', "(", ")", "!", "?", "[", "]"]
 
 class Newspeech(object):
     """Stores an XML play or speech file."""
@@ -23,10 +24,19 @@ class Newspeech(object):
         invalid = True
 
         while invalid:
+            # Attempt 1: Exact match
             index = self.getNextIndexIgnoreCase(index, searchString)
             if index is -1:
-                # The string wasn't found in any play!
-                return False
+                # Attempt 2: Match ignoring punctuation
+                index = self.getNextIndexIgnorePunctAndCase(index, searchString)
+                if index is -1:
+                    # The string wasn't found in any play!
+                    return False
+                else:
+                    # The quote exists, but the search string isn't perfect.
+                    # Perform a last-effort slow search to insert  
+                    # and remove punctuation where possible
+                    index = self.lookaheadAndCorrect(searchString, index)
 
             try:
                 play = self.backtrack(index, PLAY_TAG)
@@ -83,3 +93,52 @@ class Newspeech(object):
         """Search to find the next index of the needle in the body, ignoring case."""
 
         return self.getNextIndex(self.searchBody, needle.lower(), index + 1)
+
+    def removePunctuation(self, input):
+        """Returns the original input string, stripped of all punctuation."""
+        for punct in PUNCTUATION:
+            input = input.replace(punct, "")
+
+        return input
+
+    def getNextIndexIgnorePunctAndCase(self, index, needle):
+        """Search to find the next index of the needle in the body, ignoring case AND punctuation."""
+
+        return self.getNextIndex(self.removePunctuation(self.searchBody), self.removePunctuation(needle.lower()), index + 1)
+
+    def lookaheadAndCorrect(self, input, index):
+        """Given an index in a haystack with all punctuation removed, looks ahead of that index 
+        and returns the corresponding index of the full, corrected phrase."""
+
+        tempInput = list(input)
+        match = False
+
+        while not match:
+            haystackChar = self.searchBody[index]
+            tempIndex = index
+
+            for needleChar in tempInput:
+                if needleChar is not haystackChar:
+                    if needleChar in PUNCTUATION and haystackChar in PUNCTUATION:
+                        tempInput = list(''.join(tempInput).replace(needleChar, haystackChar, 1))
+                    elif needleChar in PUNCTUATION:
+                        tempInput.remove(needleChar)
+                    elif haystackChar in PUNCTUATION:
+                        tempInput.insert(input.index(needleChar), haystackChar)
+                    else:
+                        # Miss! Reset and try again
+                        match = False
+                        tempIndex = index
+                        tempInput = list(input)
+                        break
+
+                tempIndex += 1
+                haystackChar = self.body[tempIndex]
+                match = True
+
+            index += 1
+
+        return (index - 1)
+                   
+            
+
