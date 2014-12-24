@@ -16,18 +16,17 @@ class Newspeech(object):
         self.body = body
         self.searchBody = self.body.lower()
 
-    def getSpeech(self, searchString):
+    def getSpeech(self, searchString, index = -1):
         """Returns a ShakespeareSpeech object with the relevant speech 
         corresponding to the given search string."""
 
-        index = -1
         invalid = True
 
         while invalid:
-            # Attempt 1: Exact match
-            index = self.getNextIndexIgnoreCase(index, searchString)
-            if index is -1:
-                # Attempt 2: Match ignoring punctuation
+            # Attempt 1: Exact match - skip if index provided!
+            if index is -1: index = self.getNextIndexIgnoreCase(index, searchString)
+            # Attempt 2: Match ignoring punctuation
+            if index is -1: 
                 index = self.getNextIndexIgnorePunctAndCase(index, searchString)
                 if index is -1:
                     # The string wasn't found in any play!
@@ -47,7 +46,7 @@ class Newspeech(object):
                 invalid = True
         
         # Return the speech and metadata in a new ShakespeareSpeech object for simplicity
-        return ShakespeareSpeech(play, speaker, speech)
+        return ShakespeareSpeech(play, speaker, speech), index
 
     def backtrack(self, index, tag):
         """Backtracks from the provided index until the given tag is encountered.
