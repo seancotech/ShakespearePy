@@ -117,7 +117,7 @@ class Newspeech(object):
             tempIndex = index
 
             for needleChar in tempInput:
-                if needleChar is not haystackChar:
+                if needleChar.lower() != haystackChar.lower():
                     if needleChar in PUNCTUATION and haystackChar in PUNCTUATION:
                         tempInput = list(''.join(tempInput).replace(needleChar, haystackChar, 1))
                     elif needleChar in PUNCTUATION:
