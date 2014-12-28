@@ -25,12 +25,12 @@ class Newspeech(object):
         while invalid:
             # Attempt 1: Exact match - skip if index provided!
             if index is -1: index = self.getNextIndexIgnoreCase(index, searchString)
-            # Attempt 2: Match ignoring punctuation
+	    # Attempt 2: Match ignoring punctuation
             if index is -1: 
                 index = self.getNextIndexIgnorePunctAndCase(index, searchString)
-                if index is -1:
+		if index is -1:
                     # The string wasn't found in any play!
-                    return False
+                    return False, -1
                 else:
                     # The quote exists, but the search string isn't perfect.
                     # Perform a last-effort slow search to insert  
@@ -81,17 +81,16 @@ class Newspeech(object):
     def getNextIndex(self, haystack, needle, index):
         """Returns the next index of a substring starting from the current index in haystack."""
 
-        return haystack.find(needle, index + 1)
+	return haystack.find(needle, index + 1)
 
     def getIndexIgnoreCase(self, needle):
         """Search to find the first index of the needle in the body, ignoring case."""
-        
         return self.searchBody.index(needle.lower())
 
     def getNextIndexIgnoreCase(self, index, needle):
         """Search to find the next index of the needle in the body, ignoring case."""
 
-        return self.getNextIndex(self.searchBody, needle.lower(), index + 1)
+	return self.getNextIndex(self.searchBody, needle.lower(), index + 1)
 
     def removePunctuation(self, input):
         """Returns the original input string, stripped of all punctuation."""
@@ -138,6 +137,3 @@ class Newspeech(object):
             index += 1
 
         return (index - 1)
-                   
-            
-
