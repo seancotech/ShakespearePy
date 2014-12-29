@@ -6,7 +6,6 @@ from sys import argv
 from Newspeech import *
 from Quotes import *
 from Utils import *
-from TTSpeaker import *
 
 # Filepaths
 SCRIPT_DIR = path.dirname(path.realpath(__file__))
@@ -26,7 +25,6 @@ def main():
     readQuote, quiet, noCache = False, False, False
 
     quote, output, index = "", "", -1
-    speak = TTSpeaker()
 
     # Assumed everything after the script call is part of the quote
     # Search for the quote provided
@@ -94,6 +92,9 @@ def main():
 
     if readQuote:
         # Read it! (TTS)
+        from TTSpeaker import TTSpeaker
+        speak = TTSpeaker()
+
         speak.readString(output.getSpeech())
 
     # Save results to cache
