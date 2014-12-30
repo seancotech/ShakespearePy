@@ -21,14 +21,17 @@ class Newspeech(object):
         corresponding to the given search string."""
 
         invalid = True
+        play = True
 
         while invalid:
+            # If we're discarding the last match, we have to save previous index.
+            previousIndex = index
             # Attempt 1: Exact match - skip if index provided!
-            if index is -1: index = self.getNextIndexIgnoreCase(index, searchString)
-	    # Attempt 2: Match ignoring punctuation
+            if index is -1 or not play: index = self.getNextIndexIgnoreCase(index, searchString)
+            # Attempt 2: Match ignoring punctuation
             if index is -1: 
-                index = self.getNextIndexIgnorePunctAndCase(index, searchString)
-		if index is -1:
+                index = self.getNextIndexIgnorePunctAndCase(previousIndex, searchString)
+                if index is -1:
                     # The string wasn't found in any play!
                     return False, -1
                 else:
@@ -43,6 +46,7 @@ class Newspeech(object):
                 speech = self.backtrackGetSpeech(index)
                 invalid = False
             except:
+                play = False
                 invalid = True
         
         # Return the speech and metadata in a new ShakespeareSpeech object for simplicity
