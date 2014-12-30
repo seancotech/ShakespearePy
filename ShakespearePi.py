@@ -20,6 +20,10 @@ QUIET_SHORT_SWITCH = "-q"
 NOCACHE_LONG_SWITCH = "--no-cache"
 NOCACHE_SHORT_SWITCH = "-n"
 
+# Cache size limit
+CACHE_ENTRY_LIMIT = 500
+CACHE_REDUCTION_FACTOR = 0.2
+
 def main():
     # Command-line switch bools
     readQuote, quiet, noCache = False, False, False
@@ -102,7 +106,7 @@ def main():
         if not quiet: print ""
         if not quiet: print("Writing to cache...")
         cache[quote] = index
-        saveCache(CACHE_FILE, cache)
+        saveCache(CACHE_FILE, cacheCleanUp(cache))
 
 def prettyPrintQuote(quoteObject):
     """Pretty-prints a provided ShakespeareQuote object."""
@@ -112,6 +116,18 @@ def prettyPrintQuote(quoteObject):
         print("SPEECH: " + quoteObject.getSpeech())
     except AttributeError:
         print("Quote not found!")    
+
+def cacheCleanUp(cacheDict):
+    """Removes items from the cache to keep it below CACHE_ENTRY_LIMIT."""
+
+    # If we're below the limit, do nothing
+    if not (len(cacheDict) <= CACHE_ENTRY_LIMIT): 
+        # Otherwise, remove the first entries from the 
+        # cache determined by CACHE_REDUCTION_FACTOR.
+        for cacheEntry in list(cacheDict)[0:int(CACHE_REDUCTION_FACTOR * CACHE_ENTRY_LIMIT)]:
+            cacheDict.pop(cacheEntry)
+
+    return cacheDict
 
 # Run on startup
 main()
