@@ -8,7 +8,7 @@ Features cross-platform text-to-speech support via the `pyttsx` library as well 
 ## Syntax
 
 ````
-python ShakespearePi [-q|--quiet] [-s|--speak] [-n|--no-cache] [quote]
+python ShakespearePi.py [-q|--quiet] [-s|--speak] [-n|--no-cache] [quote]
 ````
 
 `-q`, `--quiet`: Omit all output except the output speech data.
