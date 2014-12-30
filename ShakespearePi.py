@@ -121,7 +121,7 @@ def cacheCleanUp(cacheDict):
     """Removes items from the cache to keep it below CACHE_ENTRY_LIMIT."""
 
     # If we're below the limit, do nothing
-    if not (len(cacheDict) <= CACHE_ENTRY_LIMIT): 
+    if len(cacheDict) > CACHE_ENTRY_LIMIT: 
         # Otherwise, remove the first entries from the 
         # cache determined by CACHE_REDUCTION_FACTOR.
         for cacheEntry in list(cacheDict)[0:int(CACHE_REDUCTION_FACTOR * CACHE_ENTRY_LIMIT)]:
