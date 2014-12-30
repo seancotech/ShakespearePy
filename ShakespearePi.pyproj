@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>4bc5d1b3-ce70-47d5-aac9-edfd84515ebc</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>ShakespearePi.py</StartupFile>
+    <StartupFile>ShakespearePy.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -30,7 +30,7 @@
     <Compile Include="Quotes.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ShakespearePi.py" />
+    <Compile Include="ShakespearePy.py" />
     <Compile Include="ShakespeareSpeech.py">
       <SubType>Code</SubType>
     </Compile>
