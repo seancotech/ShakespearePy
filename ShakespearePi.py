@@ -87,7 +87,7 @@ def main():
     else:
         # Search for and display quote
         index = cache[quote] if quote in cache else -1
-	output, index = newspeech.getSpeech(quote, index)
+        output, index = newspeech.getSpeech(quote, index)
         prettyPrintQuote(output)
 
     if readQuote:

@@ -32,8 +32,11 @@ class Newspeech(object):
             if index is -1: 
                 index = self.getNextIndexIgnorePunctAndCase(previousIndex, searchString)
                 if index is -1:
+                    # Check in static lookup table for quotes with very 
+                    # weird punctuation not caught by second pass above
+                    index = self.staticLookup(searchString)
                     # The string wasn't found in any play!
-                    return False, -1
+                    if index is -1: return False, index
                 else:
                     # The quote exists, but the search string isn't perfect.
                     # Perform a last-effort slow search to insert  
@@ -85,7 +88,7 @@ class Newspeech(object):
     def getNextIndex(self, haystack, needle, index):
         """Returns the next index of a substring starting from the current index in haystack."""
 
-	return haystack.find(needle, index + 1)
+        return haystack.find(needle, index + 1)
 
     def getIndexIgnoreCase(self, needle):
         """Search to find the first index of the needle in the body, ignoring case."""
@@ -94,7 +97,7 @@ class Newspeech(object):
     def getNextIndexIgnoreCase(self, index, needle):
         """Search to find the next index of the needle in the body, ignoring case."""
 
-	return self.getNextIndex(self.searchBody, needle.lower(), index + 1)
+        return self.getNextIndex(self.searchBody, needle.lower(), index + 1)
 
     def removePunctuation(self, input):
         """Returns the original input string, stripped of all punctuation."""
@@ -106,6 +109,8 @@ class Newspeech(object):
     def getNextIndexIgnorePunctAndCase(self, index, needle):
         """Search to find the next index of the needle in the body, ignoring case AND punctuation."""
 
+        test1 = self.removePunctuation(needle.lower())
+        test2 = self.removePunctuation("The play 's the thing".lower())
         return self.getNextIndex(self.removePunctuation(self.searchBody), self.removePunctuation(needle.lower()), index + 1)
 
     def lookaheadAndCorrect(self, input, index):
@@ -141,3 +146,11 @@ class Newspeech(object):
             index += 1
 
         return (index - 1)
+
+    def staticLookup(self, quote):
+        """Statically correct common errors in punctuation consistancy not otherwise caught."""
+
+        lookupTable = {"theplaysthething": "The play 's the thing"}
+        quote = self.removePunctuation(quote.lower()).replace(" ", "")
+        if quote in lookupTable: return self.getNextIndexIgnoreCase(-1, lookupTable[quote])
+        else: return -1
